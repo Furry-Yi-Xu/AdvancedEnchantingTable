@@ -5,6 +5,7 @@ import com.yixu.Builder.GuiBuilder;
 import com.yixu.Gui.EnchantingTableGui;
 import com.yixu.Interface.GuiState;
 import com.yixu.Util.Equipment.EquipmentUtil;
+import com.yixu.Util.Message.MessageUtil;
 import mc.obliviate.inventory.Gui;
 import net.milkbowl.vault.economy.Economy;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
@@ -20,7 +21,7 @@ public class RefreshActionHandler {
 
     public void handleGuiDisplayRefresh(Gui gui, Player player, InventoryClickEvent event) {
         if (!EquipmentUtil.checkEquipmentSlot(gui, player)) {
-            player.sendMessage("请将装备放置于装备栏！");
+            MessageUtil.sendMessage(player, "Enchant.Please-Put-Equipment-In-Slot");
             return;
         }
 
@@ -44,12 +45,12 @@ public class RefreshActionHandler {
         double cost = advancedEnchantingTableAPI.getConfigManager().getConfig("config.yml").getDouble("RefreshCost.Money");
 
         if (!economyAPI.has(player, cost)) {
-            player.sendMessage("金币不足，无法刷新！");
+            MessageUtil.sendMessage(player, "Enchant.Insufficient-Coins-For-Refresh");
             return;
         }
 
         economyAPI.withdrawPlayer(player, cost);
-        player.sendMessage("已成功刷新所有附魔书！");
+        MessageUtil.sendMessage(player, "Enchant.All-Enchantment-Books-Refreshed");
     }
 
     private void handlePointRefresh(Player player) {
@@ -58,11 +59,11 @@ public class RefreshActionHandler {
 
         int current = points.look(player.getUniqueId());
         if (current < cost) {
-            player.sendMessage("点券不足，无法刷新！");
+            MessageUtil.sendMessage(player, "Enchant.Insufficient-Points-For-Refresh");
             return;
         }
 
         points.take(player.getUniqueId(), cost);
-        player.sendMessage("已成功刷新所有附魔书！");
+        MessageUtil.sendMessage(player, "Enchant.All-Enchantment-Books-Refreshed");
     }
 }

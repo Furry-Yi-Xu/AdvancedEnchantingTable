@@ -116,4 +116,8 @@ public class DatabaseManager {
             dataSource.close();
         }
     }
+
+    public String getDatabaseType() {
+        return databaseType;
+    }
 }

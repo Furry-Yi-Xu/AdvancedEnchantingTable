@@ -1,5 +1,6 @@
 package com.yixu.Manager.Command;
 
+import com.yixu.AdvancedEnchantingTable;
 import com.yixu.Command.SubCommand.SubCommand;
 import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.command.Command;
@@ -15,13 +16,11 @@ public class CommandManager implements CommandExecutor {
         String subCommand = args[0].toLowerCase();
 
         if (sender instanceof Player player) {
-            if (!player.hasPermission("essential." + subCommand)) {
+            String pluginName = AdvancedEnchantingTable.class.getName().toLowerCase();
+            if (!player.hasPermission(pluginName + "." + subCommand)) {
                 MessageUtil.sendMessage(sender, "Command.No-Permission-Command");
                 return false;
             }
-        } else {
-            MessageUtil.sendMessage(sender, "Command.only-player");
-            return false;
         }
 
         if (args.length == 0) {
@@ -31,7 +30,7 @@ public class CommandManager implements CommandExecutor {
 
         switch (subCommand) {
             case "reload":
-                new SubCommand().reloadConfig(player);
+                new SubCommand().reloadConfig(sender);
                 break;
 
             case "open":

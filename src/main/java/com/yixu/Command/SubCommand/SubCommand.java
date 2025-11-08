@@ -8,15 +8,16 @@ import com.yixu.Manager.Config.ServerFileConfigManager;
 import com.yixu.Util.Message.ColorUtil;
 import com.yixu.Util.Message.MessageUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class SubCommand {
 
-    public void reloadConfig(Player player) {
+    public void reloadConfig(CommandSender sender) {
         ServerFileConfigManager configManager = AdvancedEnchantingTable.getInstance().getConfigManager();
         configManager.reloadAllConfigs();
-        MessageUtil.sendMessage(player, "Command.Succeed-Reload");
+        MessageUtil.sendMessage(sender, "Command.Succeed-Reload");
     }
 
     public void openEnchantingTableForPlayer(String playerName) {

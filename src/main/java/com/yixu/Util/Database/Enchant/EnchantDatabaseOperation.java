@@ -54,6 +54,7 @@ public class EnchantDatabaseOperation {
     }
 
     public static boolean addEnchantment(UUID uuid, List<Enchantment> enchants) {
+
         List<String> enchantmentKeys = new ArrayList<>();
         for (Enchantment enchantment : enchants) {
             enchantmentKeys.add(enchantment.getKey().getKey()); // 获取 Enchantment 的 key
@@ -61,8 +62,15 @@ public class EnchantDatabaseOperation {
 
         String enchantsJson = gson.toJson(enchantmentKeys);
 
-        String query = "INSERT INTO player_enchants (uuid, enchants) VALUES (?, ?) " +
-                "ON DUPLICATE KEY UPDATE enchants = VALUES(enchants)";
+        String databaseType = AdvancedEnchantingTable.getInstance().getDatabaseManager().getDatabaseType();
+
+        String query;
+        if (databaseType.equals("mysql")) {
+            query = "INSERT INTO player_enchants (uuid, enchants) VALUES (?, ?) " +
+                    "ON DUPLICATE KEY UPDATE enchants = VALUES(enchants)";
+        } else {
+            query = "INSERT OR REPLACE INTO player_enchants (uuid, enchants) VALUES (?, ?)";
+        }
 
         try (Connection connection = AdvancedEnchantingTable.getInstance().getDatabaseManager().getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {

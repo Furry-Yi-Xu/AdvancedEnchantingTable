@@ -4,3 +4,12 @@ Command:
   Usage-Command: "%Prefix% &c有效命令为 /AdvancedEnchantingTable <命令>"
   No-Permission-Command: "%Prefix% &c你没有权限使用命令"
   Succeed-Reload: "%Prefix% &a所有配置文件重载成功！"
+
+Enchant:
+  Please-Put-Equipment-In-Slot: "%Prefix% &c请将装备放置于装备栏！"
+  Invalid-Enchantment-Book: "%Prefix% &c无效的附魔书！"
+  Enchantment-Not-Compatible: "%Prefix% &c这个附魔与这个装备类型不符合！"
+  Enchantment-Success: "%Prefix% &a你已成功附魔！"
+  Insufficient-Coins-For-Refresh: "%Prefix% &c金币不足，无法刷新！"
+  All-Enchantment-Books-Refreshed: "%Prefix% &a已成功刷新所有附魔书！"
+  Insufficient-Points-For-Refresh: "%Prefix% &c点券不足，无法刷新！"

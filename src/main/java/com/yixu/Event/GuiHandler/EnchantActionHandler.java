@@ -9,6 +9,7 @@ import com.yixu.Util.Enchant.EnchantBookUtil;
 import com.yixu.Util.Enchant.EnchantCostUtil;
 import com.yixu.Util.Equipment.EquipmentUtil;
 import com.yixu.Util.Enchant.EnchantRequirementChecker;
+import com.yixu.Util.Message.MessageUtil;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import org.bukkit.enchantments.Enchantment;
@@ -27,14 +28,14 @@ public class EnchantActionHandler {
 
     public void handle(Gui gui, Icon icon, Player player, InventoryClickEvent event) {
         if (!EquipmentUtil.checkEquipmentSlot(gui, player)) {
-            player.sendMessage("请将装备放置于装备栏！");
+            MessageUtil.sendMessage(player, "Enchant.Please-Put-Equipment-In-Slot");
             return;
         }
 
         ItemStack equipment = getEquipmentItem(gui);
         Map.Entry<Enchantment, Integer> enchantBook = EnchantBookUtil.resolveEnchantBook(icon.getItem());
         if (enchantBook == null) {
-            player.sendMessage("无效的附魔书！");
+            MessageUtil.sendMessage(player, "Enchant.Invalid-Enchantment-Book");
             return;
         }
 
@@ -55,7 +56,7 @@ public class EnchantActionHandler {
         int level = data.getValue();
 
         if (!enchant.canEnchantItem(item)) {
-            player.sendMessage("这个附魔与这个装备类型不符合！");
+            MessageUtil.sendMessage(player, "Enchant.Enchantment-Not-Compatible");
             return;
         }
 
@@ -67,7 +68,7 @@ public class EnchantActionHandler {
         EnchantRequirementChecker.consumeRequire(player, cost);
         item.addEnchantment(enchant, level);
 
-        player.sendMessage("你已成功附魔！");
+        MessageUtil.sendMessage(player, "Enchant.Enchantment-Success");
 
         if (gui instanceof EnchantingTableGui enchantingTableGui) {
             GuiBuilder guiBuilder = enchantingTableGui.getGuiBuilder();

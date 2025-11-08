@@ -1,0 +1,6 @@
+Prefix: "&7[&b高级附魔台&7]"
+
+Command:
+  Usage-Command: "%Prefix% &c有效命令为 /AdvancedEnchantingTable <命令>"
+  No-Permission-Command: "%Prefix% &c你没有权限使用命令"
+  Succeed-Reload: "%Prefix% &a所有配置文件重载成功！"

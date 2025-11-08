@@ -1,0 +1,14 @@
+# 插件的存储方式 sqlite 或者 mysql
+# sqlite 无需配置，数据自动保存到 plugins/AdvancedEnchantingTable/saveEnchants.db
+# 修改此配置后重启服务器生效
+Type: sqlite
+
+# mysql数据库
+mysql:
+  host: "localhost"
+  port: 3306
+  database: "AdvancedEnchantingTable"
+  user: "root"
+  password: "123456"
+  parameters: "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai"
+  pool-size: 10

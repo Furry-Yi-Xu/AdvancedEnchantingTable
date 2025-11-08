@@ -1,0 +1,47 @@
+Title: "&6测试高级附魔台标题"
+
+Row: 6
+
+Icons:
+  'Refresh':
+    slot: 37
+    display:
+      material: 'craftengine:default:fairy_flower'
+      name: "此处点击刷新"
+      lore:
+        - ""
+        - "&e左键 - 消耗金币"
+        - "&b右键 - 消耗点券"
+        - ""
+        - "&e您当前金币数量 %vault_eco_balance%"
+        - "&b您当前点券数量 %playerpoints_points%"
+        - ""
+        - "&6刷新需要 500 金币"
+        - "&6刷新需要 10 点券"
+        - ""
+
+  'EnchantBook':
+    slot: [14, 15, 16, 23, 24, 25]
+    display:
+      material: 'minecraft:enchanted_book'
+      name: ""
+      lore:
+        - ""
+        - "&e此附魔需要消耗的金币 %consume_money%"
+        - ""
+        - "&b此附魔需要消耗的原版等级 %consume_vanilla_level%"
+        - "&b此附魔需要消耗的冒险等级 %consume_adventure_level%"
+        - ""
+        - "&e左键 - 附魔"
+        - "&e右键 - 查看附魔所需材料"
+        - ""
+
+  'EquipmentDisplay':
+    slot: 10
+    display:
+      material: 'minecraft:air'
+      name: ""
+      lore: []
+
+  'MaterialDisplay':
+    slot: [32, 33, 34, 41, 42, 43]

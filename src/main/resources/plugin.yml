@@ -1,0 +1,14 @@
+name: AdvancedEnchantingTable
+version: ${project.version}
+main: com.yixu.AdvancedEnchantingTable
+api-version: '1.21'
+
+commands:
+  AdvancedEnchantingTable:
+    description: "AdvancedEnchantingTable 插件主命令"
+    aliases: [aet]
+    default: op
+
+depend:
+  - CraftEngine
+  - DecentHolograms

@@ -1,0 +1,18 @@
+Enchants:
+  planter:
+    Money: 50
+    Vanilla_Level: 1
+    Adventure_Level: 2
+    Items:
+      - ID: "craftengine:default:palm_log"
+        Amount: 5
+      - ID: "craftengine:customcrops:tomato"
+        Amount: 10
+      - ID: "craftengine:customcrops:golden_tomato"
+        Amount: 15
+      - ID: "craftengine:default:topaz"
+        Amount: 25
+      - ID: "craftengine:default:topaz_pickaxe"
+        Amount: 1
+      - ID: "minecraft:ender_pearl"
+        Amount: 1

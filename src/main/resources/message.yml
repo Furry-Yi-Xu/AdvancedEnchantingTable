@@ -12,4 +12,5 @@ Enchant:
   Enchantment-Success: "%Prefix% &a你已成功附魔！"
   Insufficient-Coins-For-Refresh: "%Prefix% &c金币不足，无法刷新！"
   All-Enchantment-Books-Refreshed: "%Prefix% &a已成功刷新所有附魔书！"
+  Not_Valid_Item: "%Prefix% &c这不是一件有效的装备！"
   Insufficient-Points-For-Refresh: "%Prefix% &c点券不足，无法刷新！"

@@ -5,6 +5,7 @@ import com.yixu.Event.GuiHandler.EnchantActionHandler;
 import com.yixu.Event.GuiHandler.RefreshActionHandler;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
+import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,11 +20,11 @@ public class PlayerClickButton {
     private final EnchantActionHandler enchantHandler = new EnchantActionHandler();
     private final RefreshActionHandler refreshHandler = new RefreshActionHandler();
 
-    public void onPlayerClickButton(Gui gui, Player player, Icon icon) {
-        icon.onClick(event -> handleClick(gui, player, icon, event));
+    public void onPlayerClickButton(Gui gui, Player player, Icon icon, AdvancedSlotManager advancedSlotManager) {
+        icon.onClick(event -> handleClick(gui, player, icon, event, advancedSlotManager));
     }
 
-    private void handleClick(Gui gui, Player player, Icon icon, InventoryClickEvent event) {
+    private void handleClick(Gui gui, Player player, Icon icon, InventoryClickEvent event, AdvancedSlotManager advancedSlotManager) {
         AdvancedEnchantingTable advancedEnchantingTableAPI = AdvancedEnchantingTable.getInstance();
         FileConfiguration guiConfig = advancedEnchantingTableAPI.getConfigManager().getConfig("gui.yml");
 
@@ -35,7 +36,7 @@ public class PlayerClickButton {
         if (slot == refreshSlot) {
             refreshHandler.handleGuiDisplayRefresh(gui, player, event);
         } else if (enchantSlots.contains(slot)) {
-            enchantHandler.handle(gui, icon, player, event);
+            enchantHandler.handle(gui, icon, player, event, advancedSlotManager);
         }
     }
 }

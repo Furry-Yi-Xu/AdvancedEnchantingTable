@@ -25,4 +25,8 @@ public class EnchantingTableGui extends Gui {
     public GuiBuilder getGuiBuilder() {
         return guiBuilder;
     }
+
+    public AdvancedSlotManager getAdvancedSlotManager() {
+        return advancedSlotManager;
+    }
 }

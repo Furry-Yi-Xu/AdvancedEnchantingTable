@@ -11,12 +11,14 @@ import com.yixu.Util.Message.ColorUtil;
 import com.yixu.Util.Thread.ServerThreadUtil;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
+import mc.obliviate.inventory.advancedslot.AdvancedSlot;
 import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class GuiBuilder {
                 .setLore(ColorUtil.colorList(guiConfig.getStringList("Icons.Refresh.display.lore"), player));
 
         gui.addItem(buttonSlot, icon);
-        clickHandler.onPlayerClickButton(gui, player, icon);
+        clickHandler.onPlayerClickButton(gui, player, icon, advancedSlotManager);
 
     }
 
@@ -91,9 +93,7 @@ public class GuiBuilder {
         int equipmentSlot = guiConfig.getInt("Icons.EquipmentDisplay.slot");
 
         ItemStack equipment = gui.getInventory().getItem(equipmentSlot);
-        ItemStack baseItem = ItemStackResolver.getItemStackByItemMaterial(
-                guiConfig.getString("Icons.EnchantBook.display.material")
-        );
+        ItemStack baseItem = ItemStackResolver.getItemStackByItemMaterial(guiConfig.getString("Icons.EnchantBook.display.material"));
 
         String displayName = ColorUtil.colorMessage(guiConfig.getString("Icons.EnchantBook.display.name"), player);
         List<String> baseLore = guiConfig.getStringList("Icons.EnchantBook.display.lore");
@@ -146,7 +146,7 @@ public class GuiBuilder {
                             .enchant(randomEnchant, 1);
 
                     gui.addItem(enchantBookSlot, icon);
-                    clickHandler.onPlayerClickButton(gui, player, icon);
+                    clickHandler.onPlayerClickButton(gui, player, icon, advancedSlotManager);
                 }
 
             });
@@ -169,6 +169,22 @@ public class GuiBuilder {
                 .setLore(ColorUtil.colorList(guiConfig.getStringList("Icons.EquipmentDisplay.display.lore"), player));
 
         advancedSlotManager.addAdvancedIcon(slot, icon);
+    }
+
+    public void buildEquipmentSlotByEnchantBook(Enchantment enchant, int level) {
+
+        ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
+
+        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+        meta.addStoredEnchant(enchant, level, true);
+        enchantedBook.setItemMeta(meta);
+
+        int slot = guiConfig.getInt("Icons.EquipmentDisplay.slot");
+
+        Icon icon = new Icon(Material.AIR);
+        AdvancedSlot advancedSlot = advancedSlotManager.addAdvancedIcon(slot, icon);
+        advancedSlotManager.putIconToAdvancedSlot(advancedSlot, enchantedBook);
+
     }
 
     /**

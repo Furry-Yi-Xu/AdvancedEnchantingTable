@@ -20,8 +20,13 @@ public class RefreshActionHandler {
     private final AdvancedEnchantingTable advancedEnchantingTableAPI = AdvancedEnchantingTable.getInstance();
 
     public void handleGuiDisplayRefresh(Gui gui, Player player, InventoryClickEvent event) {
-        if (!EquipmentUtil.checkEquipmentSlot(gui, player)) {
+        if (!EquipmentUtil.checkEquipmentSlot(gui)) {
             MessageUtil.sendMessage(player, "Enchant.Please-Put-Equipment-In-Slot");
+            return;
+        }
+
+        if (!EquipmentUtil.checkItemType(gui)) {
+            MessageUtil.sendMessage(player, "Enchant.Not_Valid_Item");
             return;
         }
 

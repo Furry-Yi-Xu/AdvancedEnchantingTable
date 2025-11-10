@@ -12,12 +12,17 @@ import com.yixu.Util.Enchant.EnchantRequirementChecker;
 import com.yixu.Util.Message.MessageUtil;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
+import mc.obliviate.inventory.advancedslot.AdvancedSlot;
+import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * 附魔逻辑处理类
@@ -26,24 +31,32 @@ public class EnchantActionHandler {
 
     private final AdvancedEnchantingTable advancedEnchantingTableAPI = AdvancedEnchantingTable.getInstance();
 
-    public void handle(Gui gui, Icon icon, Player player, InventoryClickEvent event) {
-        if (!EquipmentUtil.checkEquipmentSlot(gui, player)) {
-            MessageUtil.sendMessage(player, "Enchant.Please-Put-Equipment-In-Slot");
-            return;
-        }
+    public void handle(Gui gui, Icon icon, Player player, InventoryClickEvent event, AdvancedSlotManager advancedSlotManager) {
 
         ItemStack equipment = getEquipmentItem(gui);
+
         Map.Entry<Enchantment, Integer> enchantBook = EnchantBookUtil.resolveEnchantBook(icon.getItem());
+
         if (enchantBook == null) {
             MessageUtil.sendMessage(player, "Enchant.Invalid-Enchantment-Book");
             return;
         }
 
         if (event.isLeftClick()) {
-            applyEnchant(gui, player, equipment, enchantBook);
-        } else if (event.isRightClick()) {
-            showEnchantRequirements(gui, enchantBook.getKey());
+
+            if (!EquipmentUtil.checkEquipmentSlot(gui)) {
+                MessageUtil.sendMessage(player, "Enchant.Please-Put-Equipment-In-Slot");
+                return;
+            }
+
+            applyEnchant(gui, player, equipment, enchantBook, advancedSlotManager);
         }
+
+        if (event.isRightClick()) {
+            showEnchantRequirements(gui, enchantBook.getKey());
+            return;
+        }
+
     }
 
     private ItemStack getEquipmentItem(Gui gui) {
@@ -51,11 +64,11 @@ public class EnchantActionHandler {
         return gui.getInventory().getItem(slot);
     }
 
-    private void applyEnchant(Gui gui, Player player, ItemStack item, Map.Entry<Enchantment, Integer> data) {
+    private void applyEnchant(Gui gui, Player player, ItemStack item, Map.Entry<Enchantment, Integer> data, AdvancedSlotManager advancedSlotManager) {
         Enchantment enchant = data.getKey();
         int level = data.getValue();
 
-        if (!enchant.canEnchantItem(item)) {
+        if (!enchant.canEnchantItem(item) && item.getType() != Material.BOOK) {
             MessageUtil.sendMessage(player, "Enchant.Enchantment-Not-Compatible");
             return;
         }
@@ -66,7 +79,15 @@ public class EnchantActionHandler {
         }
 
         EnchantRequirementChecker.consumeRequire(player, cost);
-        item.addEnchantment(enchant, level);
+
+        if (item.getType() == Material.BOOK) {
+            if (gui instanceof EnchantingTableGui enchantingTableGui) {
+                GuiBuilder guiBuilder = enchantingTableGui.getGuiBuilder();
+                guiBuilder.buildEquipmentSlotByEnchantBook(enchant, level);
+            }
+        } else {
+            item.addEnchantment(enchant, level);
+        }
 
         MessageUtil.sendMessage(player, "Enchant.Enchantment-Success");
 

@@ -7,8 +7,17 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
+
+import java.util.Set;
 
 public class EquipmentUtil {
+
+    private static final Set<String> ENCHANTABLE_SUFFIXES = Set.of(
+            "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_BOOTS",
+            "_SWORD", "_AXE", "_PICKAXE", "_SHOVEL", "_HOE",
+            "_BOW", "BOW", "_CROSSBOW", "_TRIDENT", "_ELYTRA", "_SHIELD"
+    );
 
     public static boolean checkEquipmentSlot(Gui gui) {
 
@@ -37,27 +46,15 @@ public class EquipmentUtil {
 
         ItemStack equipmentItemStack = gui.getInventory().getItem(equipmentSlot);
 
-        String materialName = equipmentItemStack.getType().name();
+        Material materialType = equipmentItemStack.getType();
 
-        // 检查盔甲
-        if (materialName.endsWith("_HELMET") || materialName.endsWith("_CHESTPLATE") ||
-                materialName.endsWith("_LEGGINGS") || materialName.endsWith("_BOOTS")) {
-            return true;
+        String materialName = materialType.name();
+        for (String suffix : ENCHANTABLE_SUFFIXES) {
+            if (materialName.endsWith(suffix)) {
+                return true;
+            }
         }
-
-        // 检查工具和武器
-        if (materialName.endsWith("_SWORD") || materialName.endsWith("_AXE") ||
-                materialName.endsWith("_PICKAXE") || materialName.endsWith("_SHOVEL") ||
-                materialName.endsWith("_HOE") || materialName.endsWith("_BOW") || materialName.endsWith("_CROSSBOW")) {
-            return true;
-        }
-
-        // 可以根据需要继续扩展，比如弩、钓鱼竿等可附魔物品
-        if (materialName.endsWith("_TRIDENT") || materialName.endsWith("_ELYTRA") || materialName.endsWith("_SHIELD")) {
-            return true;
-        }
-
         return false;
     }
-
 }
+

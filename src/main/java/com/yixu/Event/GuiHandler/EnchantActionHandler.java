@@ -80,6 +80,11 @@ public class EnchantActionHandler {
 
         EnchantRequirementChecker.consumeRequire(player, cost);
 
+        if (item.getAmount() > 1) {
+            MessageUtil.sendMessage(player, "Enchant.Single-Item-Only");
+            return;
+        }
+
         if (item.getType() == Material.BOOK) {
             if (gui instanceof EnchantingTableGui enchantingTableGui) {
                 GuiBuilder guiBuilder = enchantingTableGui.getGuiBuilder();

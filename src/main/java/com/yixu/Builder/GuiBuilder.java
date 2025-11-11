@@ -171,6 +171,9 @@ public class GuiBuilder {
         advancedSlotManager.addAdvancedIcon(slot, icon);
     }
 
+    /**
+     * 如果附魔的物品是书，清除书，并且重新构建附魔书
+     */
     public void buildEquipmentSlotByEnchantBook(Enchantment enchant, int level) {
 
         ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
